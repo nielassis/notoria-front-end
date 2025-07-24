@@ -1,4 +1,5 @@
 import Logo from "@/components/ui/logo/notoriaLogo";
+import { AuthProvider } from "@/contexts/authContext";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -21,7 +22,7 @@ export default function AuthLayout({
           <Logo />
         </div>
       </div>
-      {children}
+      <AuthProvider>{children}</AuthProvider>
     </div>
   );
 }

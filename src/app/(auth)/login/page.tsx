@@ -30,10 +30,10 @@ export default function LoginPage() {
         </TabsList>
 
         <TabsContent value="teacher">
-          <LoginForm userType="teacher" />
+          <LoginForm role="teacher" />
         </TabsContent>
         <TabsContent value="student">
-          <LoginForm userType="student" />
+          <LoginForm role="student" />
         </TabsContent>
       </Tabs>
     </div>

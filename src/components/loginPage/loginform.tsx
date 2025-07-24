@@ -14,11 +14,11 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import postLogin from "@/actions/auth/login";
 import Link from "next/link";
+import { useAuth } from "@/contexts/authContext";
 
 interface LoginFormProps {
-  userType: "teacher" | "student";
+  role: "teacher" | "student";
 }
 
 const formSchema = z.object({
@@ -26,7 +26,7 @@ const formSchema = z.object({
   password: z.string(),
 });
 
-export default function LoginForm({ userType }: LoginFormProps) {
+export default function LoginForm({ role }: LoginFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,18 +35,20 @@ export default function LoginForm({ userType }: LoginFormProps) {
     },
   });
 
+  const { signIn } = useAuth();
+
+  const [error, setError] = React.useState("");
+
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    const response = await postLogin({
-      data: {
-        ...data,
-        userType,
-      },
+    setError("");
+
+    const success = await signIn({
+      ...data,
+      role,
     });
 
-    if (response?.success) {
-      console.log("usuário logado com sucesso", response.data);
-    } else {
-      console.error("Erro ao fazer Login");
+    if (!success) {
+      setError("Usuário ou senha inválidos.");
     }
   }
 
@@ -93,14 +95,16 @@ export default function LoginForm({ userType }: LoginFormProps) {
           )}
         />
 
+        {error && <p className="text-red-500 text-center">{error}</p>}
+
         <Button
           type="submit"
           className="w-full bg-emerald-500 text-white hover:bg-emerald-600"
         >
-          Entrar como {userType === "student" ? "Aluno" : "Professor"}
+          Entrar como {role === "student" ? "Aluno" : "Professor"}
         </Button>
 
-        {userType === "teacher" && (
+        {role === "teacher" && (
           <p className="text-sm text-center text-gray-600 ">
             Não tem uma conta? <br />
             <Link href="register" className="text-emerald-600 hover:underline">
