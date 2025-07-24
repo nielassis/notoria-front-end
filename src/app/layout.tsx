@@ -19,7 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <head></head>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className={`${poppins.className} antialiased`}>{children}</body>
     </html>
   );

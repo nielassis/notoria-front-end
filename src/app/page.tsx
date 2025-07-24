@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/ui/header";
 import Footer from "@/components/ui/landingPage/footer";
 import FunctionsCard from "@/components/ui/landingPage/landingPageCards";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -49,7 +50,7 @@ export default function Home() {
           </span>
 
           <Button className="bg-white hover:bg-opacity/80 text-emerald-500">
-            Começe Grátis
+            <Link href="/login">Começar Grátis</Link>
           </Button>
         </div>
 
