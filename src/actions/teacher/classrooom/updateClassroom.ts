@@ -1,24 +1,22 @@
 import { api } from "@/provider/api";
 
-interface UpdateStudentPayload {
+interface UpdateClassroomPayload {
   name?: string;
-  email?: string;
-  newPassword?: string;
 }
 
-interface UpdateStudentResponse {
+interface UpdateClassroomResponse {
   success: boolean;
   message?: string;
 }
 
-export default async function updateStudent(
+export default async function updateClassroom(
   id: string,
-  data: UpdateStudentPayload,
+  data: UpdateClassroomPayload,
   token: string
-): Promise<UpdateStudentResponse> {
+): Promise<UpdateClassroomResponse> {
   try {
-    const response = await api.put<UpdateStudentResponse>(
-      `teacher/student/${id}`,
+    const response = await api.put<UpdateClassroomResponse>(
+      `classroom/${id}`,
       data,
       {
         headers: {
@@ -29,7 +27,7 @@ export default async function updateStudent(
 
     return response.data;
   } catch {
-    console.error("Erro ao atualizar aluno:");
+    console.error("Erro ao atualizar turma:");
     return {
       success: false,
       message: "Erro na requisição.",
