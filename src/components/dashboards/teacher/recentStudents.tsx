@@ -1,15 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { getInitials } from "@/utils/getInitials";
 
-const students = [
-  { name: "Ana Silva", grade: 9.5, status: "Aprovado", class: "9º A" },
-  { name: "João Santos", grade: 7.8, status: "Aprovado", class: "8º B" },
-  { name: "Maria Costa", grade: 6.2, status: "Recuperação", class: "9º A" },
-  { name: "Pedro Lima", grade: 8.9, status: "Aprovado", class: "1º Ano" },
-];
+interface RecentStudentsProps {
+  submissions: ActivitySubmission[];
+}
 
-export default function RecentStudents() {
+export default function RecentStudents({ submissions }: RecentStudentsProps) {
+  const recent = submissions.filter(
+    (submission) =>
+      submission.status === "COMPLETED" && submission.grade !== null
+  );
+
   return (
     <Card className="w-full lg:w-1/2">
       <CardHeader>
@@ -19,35 +22,24 @@ export default function RecentStudents() {
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
-        {students.map((student, index) => (
+        {recent.map((submission) => (
           <div
-            key={index}
+            key={submission.id}
             className="flex justify-between items-center border rounded-lg p-4"
           >
             <div className="flex items-center gap-3">
               <Avatar>
                 <AvatarFallback>
-                  {student.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")
-                    .toUpperCase()}
+                  {getInitials(submission.student.name)}
                 </AvatarFallback>
               </Avatar>
               <div>
-                <p className="font-medium">{student.name}</p>
-                <p className="text-sm text-muted-foreground">{student.class}</p>
+                <p className="font-medium">{submission.student.name}</p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-lg font-semibold">{student.grade}</p>
-              <Badge
-                variant={
-                  student.status === "Recuperação" ? "destructive" : "success"
-                }
-              >
-                {student.status}
-              </Badge>
+              <p className="text-lg font-semibold">{submission.grade}</p>
+              <Badge variant="success">Avaliador</Badge>
             </div>
           </div>
         ))}

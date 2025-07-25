@@ -1,5 +1,6 @@
 "use client";
 
+import { getListOfSubmissions } from "@/actions/teacher/acivities/submissions/getListOfSubmissions";
 import getAllTeacherClassroom from "@/actions/teacher/classrooom/getAllTeacherClassroom";
 import getAllTeacherStudents from "@/actions/teacher/getAllTeacherStudents";
 import DashBoardCards from "@/components/dashboards/cards";
@@ -15,6 +16,11 @@ export default function TeacherDashboard() {
 
   const [studentCount, setStudentCount] = useState<number | null>(null);
   const [classroomCount, setClassroomCount] = useState<number | null>(null);
+  const [averageScore, setAverageScore] = useState<number | null>(null);
+  const [pendingGrades, setPendingGrades] = useState<number | null>(null);
+  const [submissions, setSubmissions] = useState<SubmissionsResponse | null>(
+    null
+  );
 
   useEffect(() => {
     startTransition(() => {
@@ -54,6 +60,47 @@ export default function TeacherDashboard() {
 
       fetchClassrooms();
     });
+
+    startTransition(() => {
+      const fetchSubmissionStats = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.log("Token não encontrado");
+          return;
+        }
+
+        const response = await getListOfSubmissions(token);
+        if (!response?.success || !response.data) {
+          setAverageScore(0);
+          setPendingGrades(0);
+          setSubmissions(null);
+          return;
+        }
+
+        setSubmissions(response.data);
+
+        const submissions = response.data;
+
+        const graded = submissions.completed.filter(
+          (submission: ActivitySubmission) => submission.grade !== null
+        );
+
+        const pending = submissions.completed.filter(
+          (submission: ActivitySubmission) =>
+            submission.status === "COMPLETED" && submission.grade === null
+        );
+
+        const totalScore = graded.reduce(
+          (acc: number, curr: ActivitySubmission) => acc + (curr.grade ?? 0),
+          0
+        );
+
+        setAverageScore(graded.length ? totalScore / graded.length : 0);
+        setPendingGrades(pending.length);
+      };
+
+      fetchSubmissionStats();
+    });
   }, []);
 
   return (
@@ -82,18 +129,18 @@ export default function TeacherDashboard() {
           title="Média Geral"
           icon={TrendingUp}
           type="normal"
-          action={() => 8.2}
+          action={() => averageScore ?? "..."}
         />
         <DashBoardCards
           title="Notas Pendentes"
           icon={Star}
           type="pending"
-          action={() => 12}
+          action={() => pendingGrades ?? "..."}
         />
       </div>
 
       <div className="py-10">
-        <TabsOverview />
+        <TabsOverview submissions={submissions?.completed ?? []} />
       </div>
     </div>
   );
