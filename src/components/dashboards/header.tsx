@@ -8,27 +8,44 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { LogOutIcon, User } from "lucide-react";
+import { ArrowLeft, LogOutIcon, User } from "lucide-react";
 import { useAuth } from "@/contexts/authContext";
 import { usePathname } from "next/navigation";
 import { getInitials } from "@/utils/getInitials";
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 interface HeaderProps {
   signOut: () => void;
 }
 
 export default function DashboardHeader({ signOut }: HeaderProps) {
-  const { name } = useAuth();
+  const { name, role } = useAuth();
   const initials = name ? getInitials(name) : "??";
 
   const pathname = usePathname();
   const profilePath = `${pathname}/profile`;
+  const isClassPath = pathname.startsWith("/class");
 
   return (
-    <div className="flex items-center justify-between w-full p-4 bg-white shadow-sm border-b">
+    <div className="flex items-center sticky justify-between w-full p-4 bg-white shadow-sm border-b">
       <Logo />
-      <div className="flex gap-2">
+
+      <div className="flex gap-6">
+        {isClassPath && (
+          <Link
+            href={`/dashboard/${role}`}
+            className="mr-auto flex items-center gap-2"
+          >
+            <ArrowLeft className="md:hidden w-5 h-5" />
+
+            <Button size="sm" className="hidden md:inline-flex">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Voltar para dashboard
+            </Button>
+          </Link>
+        )}
+
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
