@@ -22,6 +22,7 @@ export interface SignInData {
 type DecodedToken = {
   sub: string;
   email: string;
+  name: string;
   role: "teacher" | "student";
   exp: number;
 };
@@ -29,6 +30,7 @@ type DecodedToken = {
 type AuthContextType = {
   isAuthenticated: boolean;
   role: "teacher" | "student" | null;
+  name: string | null;
   isLoading: boolean;
   signIn: (data: SignInData) => Promise<boolean>;
   signOut: () => void;
@@ -37,6 +39,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   role: null,
+  name: null,
   isLoading: true,
   signIn: async () => false,
   signOut: () => {},
@@ -44,6 +47,8 @@ const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [name, setName] = useState<string | null>(null);
+
   const [role, setRole] = useState<"teacher" | "student" | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
@@ -62,6 +67,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
         const decoded = jwtDecode<DecodedToken>(token.replace("Bearer ", ""));
         setRole(decoded.role);
+        setName(decoded.name);
         setIsAuthenticated(true);
       } catch (err) {
         console.error("Erro ao decodificar token:", err);
@@ -74,12 +80,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(false);
   }, [signOut]);
 
-  // Verificação inicial
   useEffect(() => {
     initializeAuth();
   }, [initializeAuth]);
 
-  // Verificação periódica (a cada 5 minutos)
   useEffect(() => {
     const interval = setInterval(() => {
       const token = localStorage.getItem("token");
@@ -105,6 +109,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               newToken.replace("Bearer ", "")
             );
             setRole(decoded.role);
+            setName(decoded.name);
             setIsAuthenticated(true);
           } catch {
             signOut();
@@ -128,6 +133,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         const decoded = jwtDecode<DecodedToken>(token.replace("Bearer ", ""));
         setRole(decoded.role);
+        setName(decoded.name);
         setIsAuthenticated(true);
         setIsLoading(false);
 
@@ -144,7 +150,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, role, isLoading, signIn, signOut }}
+      value={{ isAuthenticated, name, role, isLoading, signIn, signOut }}
     >
       {children}
     </AuthContext.Provider>

@@ -8,6 +8,20 @@ type UserValidation = {
   password: string;
 };
 
+type Class = {
+  id: string;
+  name: string;
+  _count: {
+    students: number;
+  };
+};
+
+type StudentSymple = {
+  id: string;
+  name: string;
+  email: string;
+};
+
 interface TokenPayload {
   sub: string;
   email: string;

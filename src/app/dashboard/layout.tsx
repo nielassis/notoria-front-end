@@ -1,5 +1,18 @@
-import Header from "@/components/ui/header";
-import { AuthProvider } from "@/contexts/authContext";
+"use client";
+
+import DashboardHeader from "@/components/dashboards/header";
+import { AuthProvider, useAuth } from "@/contexts/authContext";
+
+function DashboardWrapper({ children }: { children: React.ReactNode }) {
+  const { signOut } = useAuth();
+
+  return (
+    <div className="min-h-screen flex flex-col bg-slate-100">
+      <DashboardHeader signOut={signOut} />
+      {children}
+    </div>
+  );
+}
 
 export default function AuthLayout({
   children,
@@ -7,9 +20,8 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-emerald-50 to-slate-100 px-4 py-10">
-      <Header />
-      <AuthProvider>{children}</AuthProvider>
-    </div>
+    <AuthProvider>
+      <DashboardWrapper>{children}</DashboardWrapper>
+    </AuthProvider>
   );
 }

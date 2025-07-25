@@ -9,7 +9,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-emerald-50 to-slate-100 px-4 py-10">
+    <div className="min-h-screen flex flex-col items-center bg-slate-100 px-4 py-10">
       <div className="mb-8">
         <div className="flex flex-col items-center gap-4">
           <span className="text-sm text-gray-500">
