@@ -29,3 +29,43 @@ interface TokenPayload {
   role: "student" | "teacher";
   exp: number;
 }
+
+type SubmissionStatus = "PENDING" | "COMPLETED";
+
+interface Student {
+  id: string;
+  name: string;
+  email?: string;
+}
+
+type StudentWithScore = {
+  student: {
+    id: string;
+    name: string;
+    email: string;
+  };
+  score: number | null;
+};
+
+interface Activity {
+  id: string;
+  title: string;
+}
+
+interface ActivitySubmission {
+  id: string;
+  studentId: string;
+  activityId: string;
+  submittedAt: string | null;
+  fileUrl: string | null;
+  content: string | null;
+  grade: number | null;
+  status: SubmissionStatus;
+  student: Student;
+  activity: Activity;
+}
+
+interface SubmissionsResponse {
+  completed: ActivitySubmission[];
+  pending: ActivitySubmission[];
+}
