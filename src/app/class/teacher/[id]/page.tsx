@@ -1,14 +1,16 @@
 "use client";
 import { getByIdClassroom } from "@/actions/teacher/classrooom/getByIdClassroom";
 import { getAllStudentsInClassroom } from "@/actions/teacher/students/getStudentsInClassroom";
+import InsertStudentInClassroom from "@/components/dashboards/teacher/actions/insertStudentInClassroom";
+import ActivitiesTab from "@/components/dashboards/teacher/ActivitiesTab/activitiesTab";
 import { Avatar } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useProtectedRoute } from "@/hooks/useProtectedRoute";
 import { formatDate } from "@/utils/formatDate";
 import { getInitials } from "@/utils/getInitials";
 import { AvatarFallback } from "@radix-ui/react-avatar";
-import { Plus, Users2 } from "lucide-react";
+import { Users2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { startTransition, useEffect, useState } from "react";
 
@@ -72,17 +74,14 @@ export default function ClassTeacherPage() {
       </div>
 
       <div className="mt-8 flex flex-col lg:flex-row gap-4">
-        <Card className="w-full lg:w-[30%] max-h-50 overflow-auto">
+        <Card className="w-full lg:w-[30%] max-h-100 overflow-auto">
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle className="text-lg">Alunos</CardTitle>
-              <Button
-                size="sm"
-                className="bg-emerald-500 hover:bg-emerald-600 text-white gap-2"
-              >
-                <Plus className="w-4 h-4" />
-                <span className="hidden md:inline">Adicionar aluno</span>
-              </Button>
+              <InsertStudentInClassroom
+                classroomName={classname}
+                classroomId={classId}
+              />
             </div>
           </CardHeader>
 
@@ -117,7 +116,25 @@ export default function ClassTeacherPage() {
           </CardContent>
         </Card>
 
-        <Card className="w-full lg:w-[70%]"></Card>
+        <Card className="w-full lg:w-[70%] px-6 mt-6 lg:mt-0">
+          <Tabs defaultValue="activities">
+            <TabsList className="mb-6">
+              <TabsTrigger value="activities">Atividades</TabsTrigger>
+              <TabsTrigger value="recent-submissions">Entregas</TabsTrigger>
+            </TabsList>
+
+            <TabsContent
+              value="activities"
+              className="w-full border-none bg-none"
+            >
+              <ActivitiesTab classroomId={classId} />
+            </TabsContent>
+
+            <TabsContent value="recent-submissions">
+              {/* <RecentSubmissionsTab classroomId={classId} /> */}
+            </TabsContent>
+          </Tabs>
+        </Card>
       </div>
     </div>
   );
