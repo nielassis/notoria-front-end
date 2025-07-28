@@ -5,13 +5,15 @@ export async function getAllClassroomActivities(
   token: string
 ) {
   try {
-    const response = await api.get(`activities/${classroomId}`, {
+    const response = await api.get(`activities/${classroomId}/activities`, {
       headers: {
         Authorization: token,
       },
     });
-    const data = await response.data;
-    return { success: true, data };
+
+    const { activities } = response.data;
+
+    return { success: true, data: activities };
   } catch (err) {
     console.error({ success: false, error: err });
   }
