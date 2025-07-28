@@ -69,3 +69,12 @@ interface SubmissionsResponse {
   completed: ActivitySubmission[];
   pending: ActivitySubmission[];
 }
+
+interface ClassroomActivities {
+  id: string;
+  title: string;
+  description: string;
+  type: "ASSIGNMENT" | "COMPLEMENTARY_MATERIAL" | "EXERCISE";
+  dueDate: string;
+  fileUrl?: string;
+}
