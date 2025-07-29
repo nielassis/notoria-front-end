@@ -5,7 +5,6 @@ import InsertStudentInClassroom from "@/components/dashboards/teacher/actions/in
 import ActivitiesTab from "@/components/dashboards/teacher/ActivitiesTab/activitiesTab";
 import { Avatar } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useProtectedRoute } from "@/hooks/useProtectedRoute";
 import { formatDate } from "@/utils/formatDate";
 import { getInitials } from "@/utils/getInitials";
@@ -117,23 +116,7 @@ export default function ClassTeacherPage() {
         </Card>
 
         <Card className="w-full lg:w-[70%] px-6 mt-6 lg:mt-0">
-          <Tabs defaultValue="activities">
-            <TabsList className="mb-6">
-              <TabsTrigger value="activities">Atividades</TabsTrigger>
-              <TabsTrigger value="recent-submissions">Entregas</TabsTrigger>
-            </TabsList>
-
-            <TabsContent
-              value="activities"
-              className="w-full border-none bg-none"
-            >
-              <ActivitiesTab classroomId={classId} classroomName={classname} />
-            </TabsContent>
-
-            <TabsContent value="recent-submissions">
-              {/* <RecentSubmissionsTab classroomId={classId} /> */}
-            </TabsContent>
-          </Tabs>
+          <ActivitiesTab classroomId={classId} classroomName={classname} />
         </Card>
       </div>
     </div>

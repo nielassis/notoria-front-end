@@ -85,7 +85,7 @@ export default function CreateNewActivityDialog({ classroomId }: Props) {
           className="bg-emerald-500 hover:bg-emerald-600 text-white gap-2 transition-all"
         >
           <Plus className="w-4 h-4" />
-          <span>Nova atividade</span>
+          <span className="hidden md:block">Nova atividade</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-md rounded-2xl px-6 py-8 shadow-xl">
