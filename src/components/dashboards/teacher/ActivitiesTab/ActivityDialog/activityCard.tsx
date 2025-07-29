@@ -91,10 +91,10 @@ export default function ActivityCard({ activity, classroomName }: Props) {
         </div>
       </DialogTrigger>
 
-      <DialogContent className="w-full max-w-[90vw] md:max-w-[80vw] max-h-screen overflow-y-auto px-4 py-6 rounded-xl">
+      <DialogContent className="w-full max-w-[90vw]  md:max-w-[80vw] max-h-screen overflow-y-auto px-4 py-6 rounded-xl">
         <DialogHeader className="flex">
           <div className="flex justify-between">
-            <DialogTitle>{activity.title}</DialogTitle>
+            <DialogTitle className="text-start">{activity.title}</DialogTitle>
             <h2 className="text-2xl font-semibold flex items-center gap-2">
               <span
                 className={`text-xs px-2 py-0.5 rounded-full ${
