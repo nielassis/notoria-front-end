@@ -2,6 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SubmissionsTable from "./submissionsTab";
+import GradesTab from "./gradesTab";
 
 interface ActivityTabsProps {
   description?: string;
@@ -51,7 +52,7 @@ export default function ActivityTabs({ description, id }: ActivityTabsProps) {
 
         <TabsContent value="grades">
           <div className="bg-gray-100 rounded-lg p-4 text-sm text-muted-foreground">
-            Em breve: Visualização de notas aqui.
+            <GradesTab activityId={id} />
           </div>
         </TabsContent>
       </Tabs>
