@@ -127,7 +127,7 @@ export default function ClassTeacherPage() {
               value="activities"
               className="w-full border-none bg-none"
             >
-              <ActivitiesTab classroomId={classId} />
+              <ActivitiesTab classroomId={classId} classroomName={classname} />
             </TabsContent>
 
             <TabsContent value="recent-submissions">
