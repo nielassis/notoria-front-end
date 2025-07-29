@@ -1,25 +1,5 @@
 import { api } from "@/provider/api";
 
-interface Submission {
-  id: string;
-  studentId: string;
-  activityId: string;
-  submittedAt: string;
-  fileUrl: string;
-  content: string;
-  grade: number | null;
-  status: string;
-  student: {
-    id: string;
-    name: string;
-  };
-}
-
-interface SubmissionsResponse {
-  graded: Submission[];
-  pending: Submission[];
-}
-
 export async function getSubmissionsByActivityId(
   activityId: string,
   token: string
