@@ -145,7 +145,7 @@ export default function ActivityCard({ activity, classroomName }: Props) {
           />
         </div>
 
-        <ActivityTabs description={activity.description} />
+        <ActivityTabs description={activity.description} id={activity.id} />
       </DialogContent>
     </Dialog>
   );

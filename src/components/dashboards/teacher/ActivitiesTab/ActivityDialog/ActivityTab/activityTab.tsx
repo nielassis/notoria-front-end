@@ -1,12 +1,14 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import SubmissionsTable from "./submissionsTab";
 
 interface ActivityTabsProps {
   description?: string;
+  id: string;
 }
 
-export default function ActivityTabs({ description }: ActivityTabsProps) {
+export default function ActivityTabs({ description, id }: ActivityTabsProps) {
   return (
     <div className="mt-8">
       <Tabs defaultValue="instructions" className="w-full">
@@ -42,8 +44,8 @@ export default function ActivityTabs({ description }: ActivityTabsProps) {
         </TabsContent>
 
         <TabsContent value="submissions">
-          <div className="bg-gray-100 rounded-lg p-4 text-sm text-muted-foreground">
-            Em breve: Entregas dos alunos aqui.
+          <div className="rounded-lg p-4 text-sm text-muted-foreground">
+            <SubmissionsTable activityId={id} />
           </div>
         </TabsContent>
 
