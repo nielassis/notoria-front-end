@@ -7,18 +7,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  FileText,
-  FileQuestion,
-  CalendarCheck,
-  CheckCircle,
-  Clock,
-} from "lucide-react";
+import { CalendarCheck, CheckCircle, Clock } from "lucide-react";
 import { useEffect, useState, startTransition } from "react";
 import { formatDate } from "@/utils/formatDate";
 import { getSubmissionsByActivityId } from "@/actions/teacher/acivities/submissions/getSubmissionsByActivityId";
 import DashBoardCards from "@/components/dashboards/cards";
 import ActivityTabs from "./ActivityTab/activityTab";
+import ActivityOptions from "../activityOptions";
+import deleteActivity from "@/actions/teacher/acivities/deleteActivity";
+import { toast } from "sonner";
 
 interface Props {
   activity: ClassroomActivities;
@@ -42,56 +39,34 @@ export default function ActivityCard({ activity, classroomName }: Props) {
     });
   }, [activity.id]);
 
-  const getIcon = (type: string) => {
-    switch (type) {
-      case "ASSIGNMENT":
-        return <FileText className="w-5 h-5 text-white" />;
-      case "EXERCISE":
-        return <FileQuestion className="w-5 h-5 text-white" />;
-      default:
-        return <CalendarCheck className="w-5 h-5 text-white" />;
-    }
-  };
+  async function onDelete() {
+    const token = localStorage.getItem("token");
+    if (!token) return;
 
-  const getBgColor = (type: string) => {
-    switch (type) {
-      case "ASSIGNMENT":
-      case "EXERCISE":
-        return "bg-emerald-500";
-      default:
-        return "bg-slate-300";
+    const response = await deleteActivity(activity.id, token);
+    if (response.success) {
+      toast.success("Atividade deletada com sucesso!");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     }
-  };
+  }
+
+  async function onUpdated() {
+    window.location.reload();
+  }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex items-start gap-4 cursor-pointer">
-          <div className={`rounded-full p-2 ${getBgColor(activity.type)}`}>
-            {getIcon(activity.type)}
-          </div>
-          <div className="flex-1">
-            <p className="text-sm text-muted-foreground">
-              Nova atividade:{" "}
-              <span className="font-bold">{activity.title}</span>
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              <span className="text-red-500">Prazo: </span>
-              {new Date(activity.dueDate).toLocaleDateString("pt-BR", {
-                day: "2-digit",
-                month: "2-digit",
-              })}{" "}
-              –
-              {new Date(activity.dueDate).toLocaleTimeString("pt-BR", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
-          </div>
-        </div>
+        <ActivityOptions
+          activity={activity}
+          onUpdate={onUpdated}
+          onDelete={onDelete}
+        />
       </DialogTrigger>
 
-      <DialogContent className="w-full max-w-[90vw]  md:max-w-[80vw] max-h-screen overflow-y-auto px-4 py-6 rounded-xl">
+      <DialogContent className="w-full max-w-[90vw] md:max-w-[80vw] max-h-screen overflow-y-auto px-4 py-6 rounded-xl">
         <DialogHeader className="flex">
           <div className="flex justify-between">
             <DialogTitle className="text-start">{activity.title}</DialogTitle>
@@ -115,20 +90,17 @@ export default function ActivityCard({ activity, classroomName }: Props) {
             </h2>
           </div>
         </DialogHeader>
-
         <div className="flex flex-wrap gap-4 text-sm text-gray-600 mt-4">
           <p className="flex items-center gap-1">
             <CalendarCheck className="w-4 h-4" />
             <span className="font-medium text-gray-800">Prazo:</span>
             {formatDate(activity.dueDate, "DD MM YY")}
           </p>
-
           <p className="flex items-center gap-1">
             <span className="font-medium text-gray-800">Turma:</span>
             {classroomName}
           </p>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
           <DashBoardCards
             title="Avaliadas"
@@ -136,7 +108,6 @@ export default function ActivityCard({ activity, classroomName }: Props) {
             type="normal"
             action={async () => graded}
           />
-
           <DashBoardCards
             title="Pendentes"
             icon={Clock}
@@ -144,7 +115,6 @@ export default function ActivityCard({ activity, classroomName }: Props) {
             action={async () => pending}
           />
         </div>
-
         <ActivityTabs description={activity.description} id={activity.id} />
       </DialogContent>
     </Dialog>

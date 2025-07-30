@@ -24,7 +24,7 @@ export default function ActivitiesItem({ classroomId, classroomName }: Props) {
   }, [classroomId]);
 
   return (
-    <div className="space-y-2 mt-4">
+    <div className="mt-2">
       {activities.map((activity, index) => (
         <Card
           key={activity.id}
