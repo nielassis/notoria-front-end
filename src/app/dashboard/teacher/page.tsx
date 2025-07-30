@@ -77,15 +77,17 @@ export default function TeacherDashboard() {
           return;
         }
 
-        setSubmissions(response.data);
-
         const submissions = response.data;
 
-        const graded = submissions.completed.filter(
+        const completedSubmissions = Array.isArray(submissions.completed)
+          ? submissions.completed
+          : [];
+
+        const graded = completedSubmissions.filter(
           (submission: ActivitySubmission) => submission.grade !== null
         );
 
-        const pending = submissions.completed.filter(
+        const pending = completedSubmissions.filter(
           (submission: ActivitySubmission) =>
             submission.status === "COMPLETED" && submission.grade === null
         );
@@ -97,6 +99,7 @@ export default function TeacherDashboard() {
 
         setAverageScore(graded.length ? totalScore / graded.length : 0);
         setPendingGrades(pending.length);
+        setSubmissions(submissions);
       };
 
       fetchSubmissionStats();
