@@ -98,3 +98,35 @@ interface SubmissionsResponse {
   graded: Submission[];
   pending: Submission[];
 }
+
+interface Classroom {
+  id: string;
+  name: string;
+  teacherId: string;
+  createdAt: string;
+}
+
+interface StudentClassroom {
+  id: string;
+  studentId: string;
+  classroomId: string;
+  score: number | null;
+  classroom: Classroom;
+}
+
+interface SubmissionWithActivity {
+  id: string;
+  studentId: string;
+  activityId: string;
+  submittedAt: string | null;
+  fileUrl: string | null;
+  content: string | null;
+  grade: number | null;
+  status: "PENDING" | "SUBMITTED" | "GRADED";
+  activity: {
+    id: string;
+    title: string;
+    dueDate: string;
+    type: string;
+  };
+}
