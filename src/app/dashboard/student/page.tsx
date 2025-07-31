@@ -6,6 +6,7 @@ import {
 } from "@/actions/student/activities/getAllActivities";
 import { getStudentClassrooms } from "@/actions/student/classrooms/getStudentClassrooms";
 import DashBoardCards from "@/components/dashboards/cards";
+import StudentTabsOverview from "@/components/dashboards/student/studentOverview";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/contexts/authContext";
@@ -113,6 +114,10 @@ export default function StudentDashboard() {
               .length ?? "..."
           }
         />
+      </div>
+
+      <div className="py-10">
+        <StudentTabsOverview activities={activities} />
       </div>
     </div>
   );
