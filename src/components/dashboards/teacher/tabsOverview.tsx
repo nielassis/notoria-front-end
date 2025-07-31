@@ -1,8 +1,8 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import RecentClasses from "./recentClasses";
 import RecentStudents from "./recentStudents";
-import StudentsTab from "../StudentsTab/studentsTab";
-import ClassroomTab from "../ClassroomTabs/classroomTab";
+import StudentsTab from "./StudentsTab/studentsTab";
+import ClassroomTab from "./ClassroomTabs/classroomTab";
 
 interface TabsOverviewProps {
   submissions: ActivitySubmission[] | null;

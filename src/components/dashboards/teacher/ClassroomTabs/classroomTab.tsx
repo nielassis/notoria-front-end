@@ -4,7 +4,7 @@ import React, { useEffect, useState, startTransition } from "react";
 import { toast } from "sonner";
 import getAllTeacherClassroom from "@/actions/teacher/classrooom/getAllTeacherClassroom";
 import ClassroomList from "./classroomList";
-import CreateClassroomForm from "../teacher/actions/createNewClassroomDialog copy";
+import CreateClassroomForm from "../actions/createNewClassroomDialog copy";
 import deleteClassroom from "@/actions/teacher/classrooom/deleteClassroom";
 
 export default function ClassroomTab() {

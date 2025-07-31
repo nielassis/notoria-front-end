@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import CreateNewStudentDialog from "../teacher/actions/createNewStudentDialog";
+import CreateNewStudentDialog from "../actions/createNewStudentDialog";
 
 interface SearchBarProps {
   search: string;
