@@ -15,11 +15,16 @@ const gradeSchema = z.object({
 type GradeFormData = z.infer<typeof gradeSchema>;
 
 interface GradeFormProps {
+  submited: string;
   initialGrade?: number;
   onSubmit: (grade: number) => void;
 }
 
-export default function GradeForm({ initialGrade, onSubmit }: GradeFormProps) {
+export default function GradeForm({
+  initialGrade,
+  onSubmit,
+  submited,
+}: GradeFormProps) {
   const {
     handleSubmit,
     setValue,
@@ -88,7 +93,9 @@ export default function GradeForm({ initialGrade, onSubmit }: GradeFormProps) {
 
       <Button
         type="submit"
-        disabled={selectedGrade === undefined || isSubmitting}
+        disabled={
+          selectedGrade === undefined || isSubmitting || submited === "PENDING"
+        }
         className="bg-emerald-500 hover:bg-emerald-600 px-6 py-2"
       >
         <Star className="mr-1" />

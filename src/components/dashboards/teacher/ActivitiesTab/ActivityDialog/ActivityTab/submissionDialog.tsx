@@ -89,6 +89,7 @@ export default function SubmissionDialog({
             <Card className="flex flex-col items-center justify-center w-full max-w-md mx-auto  px-6 py-4 rounded-xl shadow-md mt-6">
               <GradeForm
                 initialGrade={submission?.grade ?? undefined}
+                submited={submission.status}
                 onSubmit={handleGradeSubmit}
               />
             </Card>
