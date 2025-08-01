@@ -11,6 +11,7 @@ import { ptBR } from "date-fns/locale";
 import { RecentActivityCard } from "./recentActivityCard";
 import { PendingActivityCard } from "./pendingActivityCard";
 import { Card } from "@/components/ui/card";
+import StudentClassroomTab from "./studentClassroomTab";
 
 interface TabsOverviewProps {
   activities: StudentActivity[] | null;
@@ -124,7 +125,9 @@ export default function StudentTabsOverview({ activities }: TabsOverviewProps) {
         </Card>
       </TabsContent>
 
-      <TabsContent value="classrooms"></TabsContent>
+      <TabsContent value="classrooms">
+        <StudentClassroomTab />
+      </TabsContent>
       <TabsContent value="grades"></TabsContent>
     </Tabs>
   );
