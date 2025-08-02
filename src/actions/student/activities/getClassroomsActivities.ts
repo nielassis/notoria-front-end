@@ -4,10 +4,11 @@ interface Activity {
   id: string;
   title: string;
   dueDate: string;
+  description?: string;
   type: string;
 }
 
-interface StudentActivity {
+export interface StudentActivity {
   id: string;
   studentId: string;
   activityId: string;
@@ -19,12 +20,13 @@ interface StudentActivity {
   activity: Activity;
 }
 
-export async function getStudentActivities(
-  token: string
+export async function getClassroomActivities(
+  token: string,
+  classroomId: string
 ): Promise<StudentActivity[] | null> {
   try {
     const response = await api.get<StudentActivity[]>(
-      "activities/student/submissions",
+      `activities/student/${classroomId}`,
       {
         headers: {
           Authorization: token,

@@ -130,3 +130,15 @@ interface SubmissionWithActivity {
     type: string;
   };
 }
+
+interface StudentActivityById {
+  id: string;
+  title: string;
+  description: string;
+  dueDate: string;
+  type: "ASSIGNMENT" | "COMPLEMENTARY_MATERIAL" | "EXERCISE";
+  classroomId: string;
+  teacherId: string;
+  fileUrl: string | null;
+  createdAt: string;
+}
