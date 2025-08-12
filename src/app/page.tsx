@@ -2,16 +2,13 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/ui/header";
 import Footer from "@/components/ui/landingPage/footer";
 import FunctionsCard from "@/components/ui/landingPage/landingPageCards";
-import { AuthProvider } from "@/contexts/authContext";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center min-h-screen gap-16">
       <div className="w-full">
-        <AuthProvider>
-          <Header />
-        </AuthProvider>
+        <Header />
       </div>
       <section>
         <div className="justify-center text-center flex flex-col gap-8">

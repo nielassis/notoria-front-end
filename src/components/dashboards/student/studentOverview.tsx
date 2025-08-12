@@ -1,17 +1,13 @@
 "use client";
 
-import { StudentActivity } from "@/actions/student/activities/getAllActivities";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import {
-  formatDistanceToNow,
-  isToday,
-  differenceInCalendarDays,
-} from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { RecentActivityCard } from "./recentActivityCard";
 import { PendingActivityCard } from "./pendingActivityCard";
 import { Card } from "@/components/ui/card";
 import StudentClassroomTab from "./studentClassroomTab";
+import { StudentActivity } from "@/actions/student/activities/getClassroomsActivities";
 
 interface TabsOverviewProps {
   activities: StudentActivity[] | null;
@@ -22,20 +18,6 @@ function formatTimeAgo(date: string) {
     addSuffix: true,
     locale: ptBR,
   });
-}
-
-function formatDeadline(date: string) {
-  const due = new Date(date);
-  const today = new Date();
-
-  if (isToday(due)) return "Hoje";
-
-  const diff = differenceInCalendarDays(due, today);
-  if (diff === 1) return "Amanhã";
-  if (diff < 7) return `${diff} dias`;
-  if (diff === 7) return "1 semana";
-
-  return formatDistanceToNow(due, { locale: ptBR, addSuffix: true });
 }
 
 export default function StudentTabsOverview({ activities }: TabsOverviewProps) {
@@ -69,7 +51,7 @@ export default function StudentTabsOverview({ activities }: TabsOverviewProps) {
         id: a.id,
         title: a.activity.title,
         type: a.activity.type,
-        deadline: formatDeadline(a.activity.dueDate),
+        deadline: a.activity.dueDate,
       })) ?? [];
 
   return (

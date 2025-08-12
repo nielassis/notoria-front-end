@@ -22,7 +22,6 @@ export default function StudentClassroomTab() {
   }, []);
 
   const handleCardClick = (id: string) => {
-    console.log("tuma clicada: ", id);
     router.push(`/class/${role}/${id}`);
   };
 

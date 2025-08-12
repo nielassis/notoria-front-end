@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { differenceInCalendarDays, parseISO } from "date-fns";
 
 interface PendingActivityCardProps {
   title: string;
@@ -12,6 +13,12 @@ export function PendingActivityCard({
   type,
   deadline,
 }: PendingActivityCardProps) {
+  const deadlineDate = parseISO(deadline);
+  const today = new Date();
+  const daysDiff = differenceInCalendarDays(deadlineDate, today);
+
+  console.log(deadline);
+
   return (
     <Card className="flex flex-row items-center justify-between px-6 py-4 border border-orange-200 bg-orange-50 rounded-2xl shadow-sm">
       <div className="flex flex-col gap-1">
@@ -25,8 +32,16 @@ export function PendingActivityCard({
         </Badge>
       </div>
       <div className="text-right">
-        <p className="text-sm text-orange-600 font-semibold">Prazo:</p>
-        <p className="text-base font-bold text-orange-800">{deadline}</p>
+        {daysDiff < 0 ? (
+          <p className="text-sm text-orange-600 font-semibold">
+            Atrasado há {Math.abs(daysDiff)} dias
+          </p>
+        ) : (
+          <>
+            <p className="text-sm text-orange-600 font-semibold">Prazo:</p>
+            <p className="text-base font-bold text-orange-800">{deadline}</p>
+          </>
+        )}
       </div>
     </Card>
   );
