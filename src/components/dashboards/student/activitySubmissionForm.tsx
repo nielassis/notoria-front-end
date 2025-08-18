@@ -1,5 +1,6 @@
 "use client";
 
+import { pathActivitySumission } from "@/actions/student/activities/pathActivitySumission";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,23 +12,27 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { StarIcon } from "lucide-react";
+import { Check } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
-
-interface ActivitySubmissionFormProps {
-  activityId: string;
-}
 
 const formSchema = z.object({
   content: z.string(),
+  fileUrl: z.string().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
+interface ActivitySubmissionFormProps {
+  activityId: string;
+  onSuccess?: () => void;
+}
+
 export default function ActivitySubmissionForm({
   activityId,
+  onSuccess,
 }: ActivitySubmissionFormProps) {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -37,7 +42,22 @@ export default function ActivitySubmissionForm({
   });
 
   async function onSubmit(data: FormData) {
-    console.log(data);
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const response = await pathActivitySumission({
+      activityId,
+      content: data.content,
+      fileUrl: data.fileUrl,
+      token,
+    });
+
+    if (response?.success) {
+      toast.success("Atividade entregue com sucesso!");
+      if (onSuccess) onSuccess();
+    } else {
+      toast.error("Erro ao entregar atividade");
+    }
   }
 
   return (
@@ -57,7 +77,7 @@ export default function ActivitySubmissionForm({
                   <Textarea
                     {...field}
                     className="rounded-md border resize-none border-gray-300 px-4 py-2"
-                    placeholder="Escreva aqui o conteúdo da resposta"
+                    placeholder="Escreva aqui o conteúdo da resposta"
                   />
                 </FormControl>
                 <FormMessage />
@@ -65,9 +85,9 @@ export default function ActivitySubmissionForm({
             )}
           />
 
-          <div className="flex justify-end">
-            <Button>
-              <StarIcon className="mr-2" /> Entregar atividade
+          <div className="flex justify-end gap-2">
+            <Button type="submit">
+              <Check className="mr-2" /> Entregar atividade
             </Button>
           </div>
         </form>

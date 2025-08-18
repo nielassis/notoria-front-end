@@ -142,3 +142,7 @@ interface StudentActivityById {
   fileUrl: string | null;
   createdAt: string;
 }
+
+interface DefaultReturn {
+  success: boolean;
+}
