@@ -26,13 +26,14 @@ export default function DashboardHeader({ signOut }: HeaderProps) {
   const pathname = usePathname();
   const profilePath = `/profile/${role}`;
   const isClassPath = pathname.startsWith("/class");
+  const isProfilePath = pathname.startsWith("/profile");
 
   return (
     <div className="flex items-center sticky justify-between w-full p-4 bg-white shadow-sm border-b">
       <Logo />
 
       <div className="flex gap-6">
-        {isClassPath && (
+        {(isClassPath || isProfilePath) && (
           <Link
             href={`/dashboard/${role}`}
             className="mr-auto flex items-center gap-2"
