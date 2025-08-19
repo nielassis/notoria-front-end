@@ -1,9 +1,7 @@
 "use client";
 
-import {
-  getStudentActivities,
-  StudentActivity,
-} from "@/actions/student/activities/getAllActivities";
+import { getStudentActivities } from "@/actions/student/activities/getAllActivities";
+import { StudentActivity } from "@/actions/student/activities/getClassroomsActivities";
 import { getStudentClassrooms } from "@/actions/student/classrooms/getStudentClassrooms";
 import DashBoardCards from "@/components/dashboards/cards";
 import StudentTabsOverview from "@/components/dashboards/student/studentOverview";

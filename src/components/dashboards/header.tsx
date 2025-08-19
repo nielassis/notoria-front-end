@@ -24,7 +24,7 @@ export default function DashboardHeader({ signOut }: HeaderProps) {
   const initials = name ? getInitials(name) : "??";
 
   const pathname = usePathname();
-  const profilePath = `${pathname}/profile`;
+  const profilePath = `/profile/${role}`;
   const isClassPath = pathname.startsWith("/class");
 
   return (
