@@ -39,7 +39,7 @@ export default function RecentStudents({ submissions }: RecentStudentsProps) {
             </div>
             <div className="text-right">
               <p className="text-lg font-semibold">{submission.grade}</p>
-              <Badge variant="success">Avaliador</Badge>
+              <Badge variant="success">Avaliado</Badge>
             </div>
           </div>
         ))}
