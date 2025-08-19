@@ -59,7 +59,6 @@ export default function StudentTabsOverview({ activities }: TabsOverviewProps) {
       <TabsList className="mb-6">
         <TabsTrigger value="overview">Visão Geral</TabsTrigger>
         <TabsTrigger value="classrooms">Disciplinas</TabsTrigger>
-        <TabsTrigger value="grades">Notas</TabsTrigger>
       </TabsList>
 
       <TabsContent value="overview" className="flex flex-col gap-6 lg:flex-row">
@@ -110,7 +109,6 @@ export default function StudentTabsOverview({ activities }: TabsOverviewProps) {
       <TabsContent value="classrooms">
         <StudentClassroomTab />
       </TabsContent>
-      <TabsContent value="grades"></TabsContent>
     </Tabs>
   );
 }
