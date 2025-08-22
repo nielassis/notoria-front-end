@@ -1,5 +1,6 @@
 "use client";
 
+import ChatDropdown from "@/components/dashboards/chat/chatDropDown";
 import DashboardHeader from "@/components/dashboards/header";
 import { AuthProvider, useAuth } from "@/contexts/authContext";
 
@@ -21,7 +22,10 @@ export default function AuthLayout({
 }) {
   return (
     <AuthProvider>
-      <DashboardWrapper>{children}</DashboardWrapper>
+      <DashboardWrapper>
+        {children}
+        <ChatDropdown />
+      </DashboardWrapper>
     </AuthProvider>
   );
 }

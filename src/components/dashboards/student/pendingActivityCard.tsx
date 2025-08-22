@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { differenceInCalendarDays, parseISO } from "date-fns";
+import { formatDate } from "@/utils/formatDate";
 
 interface PendingActivityCardProps {
   title: string;
@@ -39,7 +40,9 @@ export function PendingActivityCard({
         ) : (
           <>
             <p className="text-sm text-orange-600 font-semibold">Prazo:</p>
-            <p className="text-base font-bold text-orange-800">{deadline}</p>
+            <p className="text-base font-bold text-orange-800">
+              {formatDate(deadline, "DD MM YY")}
+            </p>
           </>
         )}
       </div>

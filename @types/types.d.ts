@@ -146,3 +146,10 @@ interface StudentActivityById {
 interface DefaultReturn {
   success: boolean;
 }
+
+interface Message {
+  id: string;
+  content: string;
+  senderId: string;
+  senderRole: string;
+}

@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import EditActivityDialog from "./updateActivity";
+import { formatDate } from "@/utils/formatDate";
 
 interface ActivityOptionsProps {
   activity: ClassroomActivities;
@@ -82,15 +83,7 @@ export default React.forwardRef<HTMLDivElement, ActivityOptionsProps>(
           </p>
           <p className="text-xs text-gray-500 mt-1">
             <span className="text-red-500 font-medium">Prazo: </span>
-            {dueDate.toLocaleDateString("pt-BR", {
-              day: "2-digit",
-              month: "2-digit",
-            })}{" "}
-            –{" "}
-            {dueDate.toLocaleTimeString("pt-BR", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+            {formatDate(dueDate, "DD MM YY")}
           </p>
         </div>
         <DropdownMenu>
