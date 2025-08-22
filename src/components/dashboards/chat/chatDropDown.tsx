@@ -38,7 +38,7 @@ export default function ChatDropdown() {
       </ChatDialogTrigger>
 
       <ChatDialogContent className="w-full sm:w-1/3 h-full overflow-hidden rounded-none p-0 flex flex-col bg-white shadow-lg">
-        <ChatDialogTitle>Chat</ChatDialogTitle>
+        <ChatDialogTitle>{""}</ChatDialogTitle>
         {role === "teacher" && !selectedStudent ? (
           <div className="p-4">
             <div className="p-2 gap-2">
