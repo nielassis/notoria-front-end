@@ -129,7 +129,7 @@ export default function TeacherDashboard() {
           action={() => classroomCount ?? "..."}
         />
         <DashBoardCards
-          title="Média Geral"
+          title="Média Geral dos alunos"
           icon={TrendingUp}
           type="normal"
           action={() => averageScore ?? "..."}

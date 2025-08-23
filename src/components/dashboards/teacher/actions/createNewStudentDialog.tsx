@@ -150,7 +150,7 @@ export default function CreateStudentForm() {
               <CheckCircle className="text-green-500 w-10 h-10" />
               <AlertDialogTitle>Aluno criado com sucesso!</AlertDialogTitle>
               <AlertDialogDescription className="text-gray-700">
-                Informe o aluno sobre seus dados de acesso:
+                Um email foi enviado para o aluno com as credenciais de acesso!
               </AlertDialogDescription>
             </div>
           </AlertDialogHeader>
@@ -158,14 +158,9 @@ export default function CreateStudentForm() {
           {createdStudent && (
             <div className="mt-4 bg-gray-100 rounded-lg p-4 text-left w-full max-w-sm mx-auto">
               <p className="mb-2">
+                <p>Credenciais enviadas para:</p>
                 <span className="font-semibold text-gray-800">Email:</span>{" "}
                 {createdStudent.email}
-              </p>
-              <p>
-                <span className="font-semibold text-gray-800">
-                  Senha Temporária:
-                </span>{" "}
-                {createdStudent.temporaryPassword}
               </p>
             </div>
           )}
